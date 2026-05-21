@@ -1,0 +1,91 @@
+{
+  "id": "EAG67cZLbBAsytoF",
+  "name": "Teads AI Ops Hub",
+  "description": "Intelligent assistant for Teads publisher and campaign operations. Orchestrates three specialized AI agents for publisher health, campaign performance, and creative intelligence analysis.",
+  "version": "1.0.0",
+  "active": true,
+  "nodes": [
+    {
+      "id": "b9b8ee48-700b-4ece-8589-477c6459a911",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4
+    },
+    {
+      "id": "d154e209-192e-4913-b82d-f232c07c0c6c",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3
+    },
+    {
+      "id": "41e0d074-3d67-433b-8015-4005428b049f",
+      "name": "calculate_health_score",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3
+    },
+    {
+      "id": "18e2cb51-4aa2-422f-82b7-abf7ead85906",
+      "name": "Call 'Publisher Health Agent'",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "c4a285f1-59ff-4484-95e9-7f1e85b02de3",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1
+    },
+    {
+      "id": "2d1d50b5-4d73-4c23-a578-c1e9b91cbc4f",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "08b2acdc-7341-48b0-a45c-e1b5ca3b51be",
+      "name": "Parent Orchestrator Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1
+    },
+    {
+      "id": "tool-campaign-agent-001",
+      "name": "Call 'Campaign Performance Agent'",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "tool-creative-agent-001",
+      "name": "Call 'Creative Intelligence Agent'",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "md-to-html-code-001",
+      "name": "Convert to HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "connections": {
+    "When chat message received": ["Parent Orchestrator Agent"],
+    "Parent Orchestrator Agent": ["Convert to HTML"],
+    "Convert to HTML": ["Send a message"]
+  },
+  "agents": [
+    {
+      "name": "Publisher Health Agent",
+      "id": "iyGFC0AEAutQQzl5",
+      "purpose": "Analyzes publisher performance, fill rates, eCPM, integration types, and publisher alerts"
+    },
+    {
+      "name": "Campaign Performance Agent",
+      "id": "66ZURSQR0d0xT8CW",
+      "purpose": "Analyzes campaign KPIs, CTR, budget pacing, impression delivery, and underperformance issues"
+    },
+    {
+      "name": "Creative Intelligence Agent",
+      "id": "MItrR9pyCh0WrIRf",
+      "purpose": "Handles creative scores, predictive insights, and underperforming creative analysis"
+    }
+  ]
+}
