@@ -1,0 +1,18 @@
+{
+  "query": "Which publishers have fill rates below 50% and what's their health status?",
+  "response": {
+    "publisher_health": [
+      { "publisher": "TechMedia Group", "fill_rate": 0.42, "ecpm": 3.20, "health_score": 38, "status": "CRITICAL", "alert": "Fill rate 42% — below threshold. Revenue down 18% MoM." },
+      { "publisher": "SportsBlog Network", "fill_rate": 0.47, "ecpm": 2.85, "health_score": 44, "status": "WARNING", "alert": "Fill rate recovering from 31% low last week." },
+      { "publisher": "LifestyleHub", "fill_rate": 0.39, "ecpm": 1.95, "health_score": 31, "status": "CRITICAL", "alert": "Integration issue detected — JS tag returning 500 errors on mobile." }
+    ],
+    "summary": "3 publishers with fill rate below 50%. 2 CRITICAL (immediate action required), 1 WARNING. Estimated daily revenue impact: $4,200.",
+    "recommendations": [
+      "LifestyleHub: escalate to integration team — JS tag errors on mobile causing fill rate drop",
+      "TechMedia Group: review floor price settings — possible overbidding suppression",
+      "SportsBlog Network: monitor daily — trending positive, no action needed"
+    ]
+  },
+  "agents_called": ["Publisher Health Agent"],
+  "execution_time_ms": 1840
+}
